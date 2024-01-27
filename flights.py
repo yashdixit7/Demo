@@ -16,7 +16,7 @@ def generate_flight_pattern(flight_number, start_date, end_date):
     return pattern
 
 data = {
-    'Flight Number': ['ABC123', 'XYZ456', '123XYZ'],
+    'Flight Number': ['ABC123', 'XYZ746', 'PQR777'],
     'Start Date': ['12-01-2024', '15-01-2024', '10-01-2024'],
     'End Date': ['25-01-2024', '20-01-2024', '18-01-2024'],
     'Additional Info': ['Info1', 'Info2', 'Info3'],
@@ -25,23 +25,21 @@ data = {
 df = pd.DataFrame(data)
 
 st.title("Flight Pattern Generator")
-
+selected_flight_numbers = st.multiselect("Select Flight Code:", df['Flight Number'].tolist(), default=df['Flight Number'].tolist())
 start_date = st.date_input("Select Start Date:")
 end_date = st.date_input("Select End Date:")
 
-selected_flight_numbers = st.multiselect("Select Flight Numbers:", df['Flight Number'].tolist(), default=df['Flight Number'].tolist())
-
-if st.button("Generate Pattern"):
+if st.button("SUBMIT"):
     if selected_flight_numbers and start_date and end_date:
         flight_patterns = []
         for flight_number in selected_flight_numbers:
             pattern = generate_flight_pattern(flight_number, start_date, end_date)
             flight_patterns.append(pattern)
-            st.success(f"Flight Pattern for {flight_number}: {pattern}")
+            st.success(f"Flight information - : {pattern}")
     else:
         st.warning("Please fill in all the required fields.")
 
-st.write("All Available Flight Information:")
+st.write("Flight Information:")
 df_display = pd.DataFrame({
     'Checkbox': [flight_number in selected_flight_numbers for flight_number in df['Flight Number']],
     'Flight Number': df['Flight Number'],
