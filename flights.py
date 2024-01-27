@@ -22,6 +22,7 @@ data = {
     'Flight Number': ['ABC123', 'XYZ456', '123XYZ'],
     'Start Date': ['12-01-2024', '15-01-2024', '10-01-2024'],
     'End Date': ['25-01-2024', '20-01-2024', '18-01-2024'],
+    'Additional Info': ['Info1', 'Info2', 'Info3'],
 }
 
 df = pd.DataFrame(data)
@@ -45,15 +46,20 @@ if st.button("Generate Pattern"):
         pattern = generate_flight_pattern(flight_number, start_date, end_date)
         st.success(f"Flight Pattern: {pattern}")
 
+        # Display string with flight information
+        flight_info_str = f"Selected Flight: {flight_number} | Start Date: {start_date.strftime('%d-%m-%Y')} | End Date: {end_date.strftime('%d-%m-%Y')}"
+        st.write(flight_info_str)
+
         # Display table with flight information
         st.write("Flight Information:")
         
         # Checkbox for each row
+        selected_flight_number = st.text_input("Selected Flight Number:", value=flight_number, key="flight_code_input")
         for i, row in df.iterrows():
-            checkbox = st.checkbox(f"Select {row['Flight Number']}")
+            checkbox = st.checkbox("", key=f"checkbox_{i}")
             if checkbox:
-                flight_number = row['Flight Number']
-                st.write(f"Selected: {flight_number} | {row['Start Date']} | {row['End Date']}")
-                st.text_input("Flight Code:", value=flight_number, key="flight_code_input")
+                selected_flight_number = row['Flight Number']
+                st.write(f"Selected: {selected_flight_number} | {row['Start Date']} | {row['End Date']} | {row['Additional Info']}")
+                st.text_input("Flight Code:", value=selected_flight_number, key="flight_code_input")
     else:
         st.warning("Please fill in all the required fields.")
