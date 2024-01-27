@@ -50,9 +50,9 @@ if st.button("Generate Pattern"):
             st.success(f"Flight Pattern for {flight_number}: {pattern}")
 
         # Display concatenated flight patterns
-        st.write("Concatenated Flight Patterns:")
-        for pattern in flight_patterns:
-            st.write(pattern)
+        # st.write("Concatenated Flight Patterns:")
+        # for pattern in flight_patterns:
+        #     st.write(pattern)
     else:
         st.warning("Please fill in all the required fields.")
 
