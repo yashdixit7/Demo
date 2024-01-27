@@ -33,21 +33,12 @@ flight_numbers = df['Flight Number'].tolist()
 # Streamlit app
 st.title("Flight Pattern Generator")
 
-# Display table with flight information
-st.write("All Available Flight Information:")
-selected_flight_numbers = st.multiselect("Select Flight Numbers:", flight_numbers, default=flight_numbers)
-
-# Checkbox for each row in the table
-for i, row in df.iterrows():
-    checkbox = st.checkbox("", value=(row['Flight Number'] in selected_flight_numbers), key=f"checkbox_{i}")
-    if checkbox:
-        selected_flight_number = row['Flight Number']
-        st.write(f"Selected: {selected_flight_number} | {row['Start Date']} | {row['End Date']} | {row['Additional Info']}")
-        st.text_input("Flight Code:", value=selected_flight_number, key="flight_code_input")
-
 # Calendar-based date selection for start and end date
 start_date = st.date_input("Select Start Date:")
 end_date = st.date_input("Select End Date:")
+
+# Dropdown menu for flight number
+selected_flight_numbers = st.multiselect("Select Flight Numbers:", flight_numbers, default=flight_numbers)
 
 # Button to generate pattern
 if st.button("Generate Pattern"):
@@ -57,3 +48,9 @@ if st.button("Generate Pattern"):
             st.success(f"Flight Pattern for {flight_number}: {pattern}")
     else:
         st.warning("Please fill in all the required fields.")
+
+# Display table with flight information
+st.write("All Available Flight Information:")
+for i, row in df.iterrows():
+    st.checkbox("", value=(row['Flight Number'] in selected_flight_numbers), key=f"checkbox_{i}")
+    st.write(f"Flight: {row['Flight Number']} | Start Date: {row['Start Date']} | End Date: {row['End Date']} | Additional Info: {row['Additional Info']}")
