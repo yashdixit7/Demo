@@ -43,14 +43,22 @@ selected_flight_numbers = st.multiselect("Select Flight Numbers:", flight_number
 # Button to generate pattern
 if st.button("Generate Pattern"):
     if selected_flight_numbers and start_date and end_date:
+        flight_patterns = []
         for flight_number in selected_flight_numbers:
             pattern = generate_flight_pattern(flight_number, start_date, end_date)
+            flight_patterns.append(pattern)
             st.success(f"Flight Pattern for {flight_number}: {pattern}")
+
+        # Display concatenated flight patterns
+        st.write("Concatenated Flight Patterns:")
+        for pattern in flight_patterns:
+            st.write(pattern)
     else:
         st.warning("Please fill in all the required fields.")
 
 # Display table with flight information
 st.write("All Available Flight Information:")
 for i, row in df.iterrows():
-    st.checkbox("", value=(row['Flight Number'] in selected_flight_numbers), key=f"checkbox_{i}")
-    st.write(f"Flight: {row['Flight Number']} | Start Date: {row['Start Date']} | End Date: {row['End Date']} | Additional Info: {row['Additional Info']}")
+    col1, col2 = st.beta_columns([1, 3])
+    checkbox = col1.checkbox("", value=(row['Flight Number'] in selected_flight_numbers), key=f"checkbox_{i}")
+    col2.write(f"Flight: {row['Flight Number']} | Start Date: {row['Start Date']} | End Date: {row['End Date']} | Additional Info: {row['Additional Info']}")
