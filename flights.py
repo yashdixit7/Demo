@@ -24,7 +24,7 @@ data = {
 
 df = pd.DataFrame(data)
 
-st.title("Flight Pattern Generator")
+st.title("FLIGHTS PATTERNS")
 selected_flight_numbers = st.multiselect("Select Flight Code:", df['Flight Number'].tolist(), default=df['Flight Number'].tolist())
 start_date = st.date_input("Select Start Date:")
 end_date = st.date_input("Select End Date:")
