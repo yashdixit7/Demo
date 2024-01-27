@@ -43,11 +43,11 @@ if st.button("Generate Pattern"):
 
 st.write("All Available Flight Information:")
 df_display = pd.DataFrame({
-    'Checkbox': [flight_number in selected_flight_numbers for flight_number in df['Flight Number']],
+    'Checkbox': st.checkbox("", value=(flight_number in selected_flight_numbers), key=f"checkbox_{i}") for i, flight_number in enumerate(df['Flight Number']),
     'Flight Number': df['Flight Number'],
     'Start Date': df['Start Date'],
     'End Date': df['End Date'],
     'Additional Info': df['Additional Info']
 })
 
-st.dataframe(df_display.set_index('Flight Number'))
+st.dataframe(df_display[['Checkbox', 'Flight Number', 'Start Date', 'End Date', 'Additional Info']])
