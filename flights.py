@@ -26,11 +26,14 @@ data = {
 
 df = pd.DataFrame(data)
 
+# List of example flight numbers
+flight_numbers = df['Flight Number'].tolist()
+
 # Streamlit app
 st.title("Flight Pattern Generator")
 
-# Input box for flight number
-flight_number = st.text_input("Enter Flight Number (Alpha Numeric):")
+# Dropdown menu for flight number
+flight_number = st.selectbox("Select Flight Number:", flight_numbers)
 
 # Calendar-based date selection for start and end date
 start_date = st.date_input("Select Start Date:")
@@ -39,23 +42,4 @@ end_date = st.date_input("Select End Date:")
 # Button to generate pattern
 if st.button("Generate Pattern"):
     if flight_number and start_date and end_date:
-        pattern = generate_flight_pattern(flight_number, start_date, end_date)
-        st.success(f"Flight Pattern: {pattern}")
-
-        # Display table with flight information
-        st.write("Flight Information:")
-        st.table(df)
-
-        # Checkbox for each row
-        selected_rows = st.checkbox("Select All Rows", key="select_all_rows")
-        if selected_rows:
-            selected_rows = df.index.tolist()
-        else:
-            selected_rows = []
-
-        for i, row in df.iterrows():
-            checkbox = st.checkbox("", value=(i in selected_rows), key=f"checkbox_{i}")
-            if checkbox:
-                st.write(f"Selected: {row['Flight Number']} | {row['Start Date']} | {row['End Date']}")
-    else:
-        st.warning("Please fill in all the required fields.")
+        pattern = generate_flight_pattern(flight_number, start_da
