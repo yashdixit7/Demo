@@ -36,7 +36,7 @@ st.title("Flight Pattern Generator")
 selected_flight_index = st.selectbox("Select Flight Number:", range(len(flight_numbers)), format_func=lambda x: flight_numbers[x])
 
 # Extract selected flight number
-flight_number = flight_numbers[selected_flight_index]
+flight_number = flight_numbers[int(selected_flight_index)]
 
 # Calendar-based date selection for start and end date
 start_date = st.date_input("Select Start Date:")
