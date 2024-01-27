@@ -29,9 +29,10 @@ col1, col2, col3 = st.columns(3)
 with col1:
     selected_flight_numbers = st.multiselect("Select Flight Code:", df['Flight Number'].tolist())
 with col2:
-    end_date = st.date_input("Select End Date:")
+     start_date = st.date_input("Select Start Date:")
 with col3:
-    start_date = st.date_input("Select Start Date:")
+    end_date = st.date_input("Select End Date:")
+   
     
 
 if st.button("SUBMIT"):
