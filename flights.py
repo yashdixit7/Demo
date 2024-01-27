@@ -58,6 +58,5 @@ if st.button("Generate Pattern"):
                 flight_number = row['Flight Number']
                 st.write(f"Selected: {flight_number} | {row['Start Date']} | {row['End Date']}")
                 st.text_input("Flight Code:", value=flight_number, key="flight_code_input")
-
     else:
         st.warning("Please fill in all the required fields.")
