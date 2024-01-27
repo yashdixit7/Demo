@@ -33,7 +33,10 @@ flight_numbers = df['Flight Number'].tolist()
 st.title("Flight Pattern Generator")
 
 # Dropdown menu for flight number
-flight_number = st.selectbox("Select Flight Number:", flight_numbers)
+selected_flight_index = st.selectbox("Select Flight Number:", range(len(flight_numbers)), format_func=lambda x: flight_numbers[x])
+
+# Extract selected flight number
+flight_number = flight_numbers[selected_flight_index]
 
 # Calendar-based date selection for start and end date
 start_date = st.date_input("Select Start Date:")
@@ -47,18 +50,14 @@ if st.button("Generate Pattern"):
 
         # Display table with flight information
         st.write("Flight Information:")
-        st.table(df)
-
+        
         # Checkbox for each row
-        selected_rows = st.checkbox("Select All Rows", key="select_all_rows")
-        if selected_rows:
-            selected_rows = df.index.tolist()
-        else:
-            selected_rows = []
-
         for i, row in df.iterrows():
-            checkbox = st.checkbox("", value=(i in selected_rows), key=f"checkbox_{i}")
+            checkbox = st.checkbox(f"Select {row['Flight Number']}", key=f"checkbox_{i}")
             if checkbox:
-                st.write(f"Selected: {row['Flight Number']} | {row['Start Date']} | {row['End Date']}")
+                flight_number = row['Flight Number']
+                st.write(f"Selected: {flight_number} | {row['Start Date']} | {row['End Date']}")
+                st.text_input("Flight Code:", value=flight_number, key="flight_code_input")
+
     else:
         st.warning("Please fill in all the required fields.")
