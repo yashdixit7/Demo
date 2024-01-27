@@ -33,10 +33,7 @@ flight_numbers = df['Flight Number'].tolist()
 st.title("Flight Pattern Generator")
 
 # Dropdown menu for flight number
-selected_flight_index = st.selectbox("Select Flight Number:", range(len(flight_numbers)), format_func=lambda x: flight_numbers[x])
-
-# Extract selected flight number
-flight_number = flight_numbers[int(selected_flight_index)]
+flight_number = st.selectbox("Select Flight Number:", flight_numbers)
 
 # Calendar-based date selection for start and end date
 start_date = st.date_input("Select Start Date:")
@@ -53,7 +50,7 @@ if st.button("Generate Pattern"):
         
         # Checkbox for each row
         for i, row in df.iterrows():
-            checkbox = st.checkbox(f"Select {row['Flight Number']}", key=f"checkbox_{i}")
+            checkbox = st.checkbox(f"Select {row['Flight Number']}")
             if checkbox:
                 flight_number = row['Flight Number']
                 st.write(f"Selected: {flight_number} | {row['Start Date']} | {row['End Date']}")
