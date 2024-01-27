@@ -42,19 +42,12 @@ if st.button("Generate Pattern"):
         st.warning("Please fill in all the required fields.")
 
 st.write("All Available Flight Information:")
-
-# Create a custom HTML structure for aligning checkboxes row-wise with the table
-checkbox_html = "<div style='display: flex; flex-direction: column; align-items: center;'>"
-for i, flight_number in enumerate(df['Flight Number']):
-    checkbox_html += f"<div style='display: flex; align-items: center;'><input type='checkbox' style='margin-right: 5px;' value='{flight_number}' {'checked' if flight_number in selected_flight_numbers else ''}>{flight_number}</div>"
-checkbox_html += "</div>"
-
-st.markdown(checkbox_html, unsafe_allow_html=True)
 df_display = pd.DataFrame({
+    'Checkbox': [flight_number in selected_flight_numbers for flight_number in df['Flight Number']],
     'Flight Number': df['Flight Number'],
     'Start Date': df['Start Date'],
     'End Date': df['End Date'],
     'Additional Info': df['Additional Info']
 })
 
-st.dataframe(df_display)
+st.dataframe(df_display[['Checkbox', 'Flight Number', 'Start Date', 'End Date', 'Additional Info']])
