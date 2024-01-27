@@ -1,1 +1,1 @@
-web: sh setup.sh && streamlit run hdp.py
+web: sh setup.sh && streamlit run flights.py
