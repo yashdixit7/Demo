@@ -27,7 +27,7 @@ df = pd.DataFrame(data)
 st.title("FLIGHTS PATTERNS")
 col1, col2, col3 = st.columns(3)
 with col1:
-    selected_flight_numbers = st.multiselect("Select Flight Code:", df['Flight Number'].tolist(), default=df['Flight Number'].tolist())
+    selected_flight_numbers = st.multiselect("Select Flight Code:", df['Flight Number'].tolist())
 with col2:
     end_date = st.date_input("Select End Date:")
 with col3:
