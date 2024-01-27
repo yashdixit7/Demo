@@ -65,7 +65,7 @@ if st.button("Generate Pattern"):
 st.write("All Available Flight Information:")
 table_data = []
 for i, row in df.iterrows():
-    col1, col2 = st.beta_columns([1, 3])
+    col1, col2 = st.columns([1, 3])
     checkbox = col1.checkbox("", value=(row['Flight Number'] in selected_flight_numbers), key=f"checkbox_{i}")
     table_data.append({
         'Checkbox': checkbox,
