@@ -25,9 +25,14 @@ data = {
 df = pd.DataFrame(data)
 
 st.title("FLIGHTS PATTERNS")
-selected_flight_numbers = st.multiselect("Select Flight Code:", df['Flight Number'].tolist(), default=df['Flight Number'].tolist())
-start_date = st.date_input("Select Start Date:")
-end_date = st.date_input("Select End Date:")
+col1, col2, col3 = st.columns(3)
+with col1:
+    selected_flight_numbers = st.multiselect("Select Flight Code:", df['Flight Number'].tolist(), default=df['Flight Number'].tolist())
+with col2:
+    end_date = st.date_input("Select End Date:")
+with col3:
+    start_date = st.date_input("Select Start Date:")
+    
 
 if st.button("SUBMIT"):
     if selected_flight_numbers and start_date and end_date:
