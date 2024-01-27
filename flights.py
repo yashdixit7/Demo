@@ -27,14 +27,23 @@ data = {
 
 df = pd.DataFrame(data)
 
-# List of example flight numbers
+# List of available flight numbers
 flight_numbers = df['Flight Number'].tolist()
 
 # Streamlit app
 st.title("Flight Pattern Generator")
 
-# Dropdown menu for flight number
-flight_number = st.selectbox("Select Flight Number:", flight_numbers)
+# Display table with flight information
+st.write("All Available Flight Information:")
+selected_flight_numbers = st.multiselect("Select Flight Numbers:", flight_numbers, default=flight_numbers)
+
+# Checkbox for each row in the table
+for i, row in df.iterrows():
+    checkbox = st.checkbox("", value=(row['Flight Number'] in selected_flight_numbers), key=f"checkbox_{i}")
+    if checkbox:
+        selected_flight_number = row['Flight Number']
+        st.write(f"Selected: {selected_flight_number} | {row['Start Date']} | {row['End Date']} | {row['Additional Info']}")
+        st.text_input("Flight Code:", value=selected_flight_number, key="flight_code_input")
 
 # Calendar-based date selection for start and end date
 start_date = st.date_input("Select Start Date:")
@@ -42,24 +51,9 @@ end_date = st.date_input("Select End Date:")
 
 # Button to generate pattern
 if st.button("Generate Pattern"):
-    if flight_number and start_date and end_date:
-        pattern = generate_flight_pattern(flight_number, start_date, end_date)
-        st.success(f"Flight Pattern: {pattern}")
-
-        # Display string with flight information
-        flight_info_str = f"Selected Flight: {flight_number} | Start Date: {start_date.strftime('%d-%m-%Y')} | End Date: {end_date.strftime('%d-%m-%Y')}"
-        st.write(flight_info_str)
-
-        # Display table with flight information
-        st.write("Flight Information:")
-        
-        # Checkbox for each row
-        selected_flight_number = st.text_input("Selected Flight Number:", value=flight_number, key="flight_code_input")
-        for i, row in df.iterrows():
-            checkbox = st.checkbox("", key=f"checkbox_{i}")
-            if checkbox:
-                selected_flight_number = row['Flight Number']
-                st.write(f"Selected: {selected_flight_number} | {row['Start Date']} | {row['End Date']} | {row['Additional Info']}")
-                st.text_input("Flight Code:", value=selected_flight_number, key="flight_code_input")
+    if selected_flight_numbers and start_date and end_date:
+        for flight_number in selected_flight_numbers:
+            pattern = generate_flight_pattern(flight_number, start_date, end_date)
+            st.success(f"Flight Pattern for {flight_number}: {pattern}")
     else:
         st.warning("Please fill in all the required fields.")
