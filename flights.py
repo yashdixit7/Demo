@@ -57,22 +57,8 @@ if st.button("Generate Pattern"):
         st.warning("Please fill in all the required fields.")
 
 # Display table with flight information
-# for i, row in df.iterrows():
-#     col1, col2 = st.beta_columns([1, 3])
-#     checkbox = col1.checkbox("", value=(row['Flight Number'] in selected_flight_numbers), key=f"checkbox_{i}")
-#     col2.write(f"Flight: {row['Flight Number']} | Start Date: {row['Start Date']} | End Date: {row['End Date']} | Additional Info: {row['Additional Info']}")
-
 st.write("All Available Flight Information:")
-table_data = []
 for i, row in df.iterrows():
-    col1, col2 = st.columns([1, 3])
+    col1, col2 = st.beta_columns([1, 3])
     checkbox = col1.checkbox("", value=(row['Flight Number'] in selected_flight_numbers), key=f"checkbox_{i}")
-    table_data.append({
-        'Checkbox': checkbox,
-        'Flight Number': col2.write(f"Flight: {row['Flight Number']}"),
-        'Start Date': row['Start Date'],
-        'End Date': row['End Date'],
-        'Additional Info': row['Additional Info']
-    })
-
-st.table(pd.DataFrame(table_data).set_index('Flight Number'))
+    col2.write(f"Flight: {row['Flight Number']} | Start Date: {row['Start Date']} | End Date: {row['End Date']} | Additional Info: {row['Additional Info']}")
