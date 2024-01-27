@@ -69,7 +69,7 @@ for i, row in df.iterrows():
     checkbox = col1.checkbox("", value=(row['Flight Number'] in selected_flight_numbers), key=f"checkbox_{i}")
     table_data.append({
         'Checkbox': checkbox,
-        'Flight Number': col2.write(f"Flight: {row['Flight Number']}),
+        'Flight Number': col2.write(f"Flight: {row['Flight Number']}"),
         'Start Date': row['Start Date'],
         'End Date': row['End Date'],
         'Additional Info': row['Additional Info']
